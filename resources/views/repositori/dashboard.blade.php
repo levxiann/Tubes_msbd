@@ -9,7 +9,7 @@
   <div id="content" class="p-4 p-md-5 pt-5"> {{-- wajib pakai --}}
       <div class="card">
         <div class="card-header">
-          Featured
+          Welcome
         </div>
         <div class="card-body">
           <h5 class="card-title">Selamat Datang di Aplikasi Repositori Dokumen Sekolah</h5>
