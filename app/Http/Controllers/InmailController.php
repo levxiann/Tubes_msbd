@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Inmail;
 use Illuminate\Http\Request;
 
 class InmailController extends Controller
@@ -13,7 +14,7 @@ class InmailController extends Controller
      */
     public function index()
     {
-        //
+        return Inmail::all();
     }
 
     /**
