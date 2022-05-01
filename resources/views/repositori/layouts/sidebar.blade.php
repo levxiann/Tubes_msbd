@@ -33,11 +33,11 @@
         <ul class="collapse list-unstyled" id="dokumen">
           @if (Auth::user()->role != 'lainnya')
           <li>
-              <a href="#">Input Dokumen</a>
+              <a href="{{url('/document/inputdocument')}}">Input Dokumen</a>
           </li>
           @endif
           <li>
-              <a href="#">Rekap Dokumen</a>
+              <a href="{{url('/document')}}">Rekap Dokumen</a>
           </li>
         </ul>
       </li>
