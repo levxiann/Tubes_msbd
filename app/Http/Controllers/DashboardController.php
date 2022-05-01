@@ -13,6 +13,9 @@ class DashboardController extends Controller
 
     public function index()
     {
+        session()->put('menu','dash');
+        session()->put('submenu','dash');
+
         return view('repositori.dashboard');
     }
 }
