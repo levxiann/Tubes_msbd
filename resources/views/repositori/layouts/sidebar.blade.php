@@ -66,8 +66,19 @@
           </li>
         </ul>
       </li>
-      <li>
-        <a href="#">Laporan</a>
+      <li class="active">
+        <a href="#laporan" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Laporan</a>
+        <ul class="collapse list-unstyled" id="laporan">
+          <li>
+              <a href="/laporan_inmail">Laporan Surat Masuk</a>
+          </li>
+          <li>
+              <a href="/laporan_outmail">Laporan Surat Keluar</a>
+          </li>
+          <li>
+              <a href="{{route('laporan-disposisi')}}">Laporan Surat Disposisi</a>
+          </li>
+        </ul>
       </li>
       @endif
       @if (Auth::user()->role == 'admin')
