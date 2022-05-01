@@ -24,5 +24,6 @@ class DatabaseSeeder extends Seeder
         $this->call(InmailSeeder::class);
         $this->call(DispositionSeeder::class);
         $this->call(DestinationSeeder::class);
+        $this->call(InmailSeeder2::class);
     }
 }
