@@ -20,8 +20,8 @@ class ForgotPasswordController extends Controller
 
     use SendsPasswordResetEmails;
 
-    public function showLinkRequestForm()
-    {
-        return view('account.forpass');
-    }
+    // public function showLinkRequestForm()
+    // {
+    //     return view('account.forpass');
+    // }
 }
