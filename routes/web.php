@@ -120,3 +120,9 @@ Route::get('/logout',function(){
     return Redirect::to('/login');
     
 })->name('logout');
+
+Route::get('/register', function(){
+
+    return Redirect::to('/login');
+})->name('register');
+
