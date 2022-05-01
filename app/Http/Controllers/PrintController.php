@@ -7,6 +7,8 @@ use App\Models\Inmail;
 use App\Models\Outmail;
 use App\Models\Disposition;
 use Carbon\Carbon;
+use Dompdf\Dompdf;
+use Dompdf\Options;
 use Illuminate\Support\Facades\Auth;
 use PDF;
 class PrintController extends Controller
@@ -66,6 +68,20 @@ class PrintController extends Controller
             $data = Inmail::latest()->get();
         }
 
+        $options = new Options();
+        $options->set('isRemoteEnabled', true);
+        $dompdf = new Dompdf($options);
+        $contxt = stream_context_create([ 
+            'ssl' => [ 
+                'verify_peer' => FALSE, 
+                'verify_peer_name' => FALSE,
+                'allow_self_signed'=> TRUE
+            ] 
+        ]);
+        $dompdf->setHttpContext($contxt);
+
+        set_time_limit(600);
+
         $pdf = PDF::loadview('repositori.print_inmail', ['data' => $data, 'tgl1' => $request->tgl1, 'tgl2' => $request->tgl2]);
 
         return $pdf->stream(date('dmY_His').'_laporan-inmail.pdf');
@@ -111,6 +127,20 @@ class PrintController extends Controller
             $data = Outmail::latest()->get();
         }
 
+        $options = new Options();
+        $options->set('isRemoteEnabled', true);
+        $dompdf = new Dompdf($options);
+        $contxt = stream_context_create([ 
+            'ssl' => [ 
+                'verify_peer' => FALSE, 
+                'verify_peer_name' => FALSE,
+                'allow_self_signed'=> TRUE
+            ] 
+        ]);
+        $dompdf->setHttpContext($contxt);
+
+        set_time_limit(600);
+
         $pdf = PDF::loadview('repositori.print_outmail',['data'=>$data, 'tgl1' => $request->tgl1, 'tgl2' => $request->tgl2]);
         
         return $pdf->stream(date('dmY_His').'_laporan-outmail.pdf');
@@ -155,6 +185,20 @@ class PrintController extends Controller
         {
             $data = Disposition::latest()->get();
         }
+
+        $options = new Options();
+        $options->set('isRemoteEnabled', true);
+        $dompdf = new Dompdf($options);
+        $contxt = stream_context_create([ 
+            'ssl' => [ 
+                'verify_peer' => FALSE, 
+                'verify_peer_name' => FALSE,
+                'allow_self_signed'=> TRUE
+            ] 
+        ]);
+        $dompdf->setHttpContext($contxt);
+
+        set_time_limit(600);
 
         $pdf = PDF::loadview('repositori.print_disposisi',['data'=>$data, 'tgl1' => $request->tgl1, 'tgl2' => $request->tgl2]);
         return $pdf->stream(date('dmY_His').'_laporan-disposisi.pdf');

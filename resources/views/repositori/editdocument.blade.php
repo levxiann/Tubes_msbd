@@ -3,22 +3,24 @@
 @section('content')
 @include('repositori.layouts.sidebar')
 
-<div class="container mt-3 ml-4 mr-4">
-  <h2>Edit Data Dokumen</h2><hr>
+<div id="content" class="p-4 p-md-5 pt-5">
+    @if (session('success'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <strong>Sukses!</strong> {{ session('success') }}
+        </div>
+      @endif
+      @if (session('error'))
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <strong>Gagal!</strong> {{ session('error') }}
+        </div>
+      @endif
+      <h3>Edit Dokumen</h3>
   <form action="{{url('document/editdocument/'.$documents->no)}}" method="POST" enctype="multipart/form-data">
     @csrf
-    @method('PUT')
-     <!-- Alert -->
-     @if (session('success'))
-     <div class="alert alert-success alert-dismissible fade show" role="alert">
-       <strong>Sukses!</strong> {{ session('success') }}
-       <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-     </div>
-     @endif
-
+    @method('PUT') 
      <div class="form-group mb-3 ml-4 mr-4">
         <label for="no">No. Dokumen</label>
-        <input type="text" class="form-control" id="no"  placeholder="Masukkan nama dokumen" name="no" value="{{$documents->no}}"">
+        <input type="text" class="form-control @error('no') is-invalid @enderror" id="no"  placeholder="Masukkan nama dokumen" name="no" value="{{$documents->no}}">
         @error('no')
             <span class="invalid-feedback" role="alert">
                 <strong>{{ $message }}</strong>
@@ -47,11 +49,11 @@
         <label for="position-option">Jenis Dokumen</label>
         <select class="form-control" id="document_type_id" name="document_type_id">
            @foreach ($document_types as $type)
-           @if($type->id == $documents->document_type_id)
-           <option value="{{$type->id}}" selected>{{$type->nama_jenis_dokumen}}</option>
-           @else
-           <option value="{{$type->id}}">{{$type->nama_jenis_dokumen}}</option>
-           @endif
+                @if($type->id == $documents->document_type_id)
+                <option value="{{$type->id}}" selected>{{$type->nama_jenis_dokumen}}</option>
+                @else
+                <option value="{{$type->id}}">{{$type->nama_jenis_dokumen}}</option>
+                @endif
            @endforeach
         </select>
         @error('document_type_id')
@@ -64,11 +66,11 @@
         <label for="position-option">Pemilik Dokumen</label>
         <select class="form-control" id="section_id" name="section_id">
            @foreach ($sections as $section)
-           @if($section->id == $documents->section_id)
-           <option value="{{$section->id}}" selected>{{$section->nama_bagian}}</option>
-           @else
-           <option value="{{$section->id}}">{{$section->nama_bagian}}</option>
-           @endif
+                @if($section->id == $documents->section_id)
+                <option value="{{$section->id}}" selected>{{$section->nama_bagian}}</option>
+                @else
+                <option value="{{$section->id}}">{{$section->nama_bagian}}</option>
+                @endif
            @endforeach
         </select>
         @error('section_id')
@@ -81,8 +83,8 @@
         <label for="sifat_dokumen">Sifat Dokumen</label> <br>
         <div class="form-check form-check-inline form-control @error('sifat_dokumen') is-invalid @enderror">
         <label for="sifat_dokumen">
-            <input type="radio" name="sifat_dokumen" value="umum" id="sifat_dokumen" {{$documents->sifat_dokumen == 'umum'? 'checked' : ''}} >Umum
-            <input type="radio" name="sifat_dokumen" value="rahasia" id="sifat_dokumen" {{$documents->sifat_dokumen == 'rahasia'? 'checked' : ''}} >Rahasia
+            <input type="radio" name="sifat_dokumen" value="umum" id="sifat_dokumen" {{$documents->sifat_dokumen == 'umum'? 'checked' : ''}} > Umum
+            <input type="radio" name="sifat_dokumen" value="rahasia" id="sifat_dokumen" {{$documents->sifat_dokumen == 'rahasia'? 'checked' : ''}} > Rahasia
         </label>
         </div>
         @error('sifat_dokumen')
@@ -111,10 +113,11 @@
     </div>
     <div class="form-group mb-3 ml-4 mr-4">
         <a class="btn btn-light" href="{{url('/document')}}">Cancel</a>
-        <button type="submit" name="submit" class="btn btn-primary confirm-button"><span class="fa fa-save"></span>Save</button>
+        <button type="submit" name="submit" class="btn btn-primary confirm-button"><span class="fa fa-save"></span> Save</button>
     </div>
     </form>
 </div>     
+</div>
    
-    
+<script src="{{asset('sidebar_template/js/jquery.min.js')}}"></script>
 @endsection

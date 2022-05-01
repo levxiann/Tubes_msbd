@@ -10,49 +10,76 @@ use Illuminate\Support\Facades\Auth;
 
 class DocumentController extends Controller
 {
-    public function index(Request $request)
+    public function __construct()
     {
-        $documents = Document::where([
-            ['no', '!=', Null], ['nama_dokumen', '!=', Null], ['tanggal_terbit', '!=', Null],
-            [function ($query) use ($request){
-                if(($term = $request->term)){
-                    $query->orWhere('no', $term)->get();
-                    $query->orWhere('nama_dokumen', 'LIKE', '%'.$term.'%')->get();
-                    $query->orWhere('tanggal_terbit', 'LIKE', '%'.$term.'%')->get();
-                }
-            }]
-        ])
-        ->orderBy("no", "desc")
-        ->paginate(10);
+        $this->middleware('auth');
+    }
 
-        $documents->appends(['term' => $request->term]);
+    public function index()
+    {
+        session()->put('menu','document');
+        session()->put('submenu','rekapdoc');
 
-        return view('repositori.rekapdocument', compact('documents'));
+        $types = DocumentType::all();
+
+        $sections = Section::all();
+
+        if(Auth::user()->role == "lainnya")
+        {
+            $documents = Document::where('sifat_dokumen', 'umum')->orWhere('section_id', Auth::user()->section_id)->get();
+
+            return view('repositori.rekapdocument', compact('documents', 'types', 'sections'));
+        }
+        else
+        {
+            $documents = Document::all();
+
+            return view('repositori.rekapdocument', compact('documents', 'types', 'sections'));
+        }
     }
 
     public function create()
     {   
-        $documents = Document::all();
+        if(Auth::user()->role == 'lainnya')
+        {
+            return redirect('/home');
+        }
+
+        session()->put('menu','document');
+
+        session()->put('submenu','insertdoc');
+
         $document_types = DocumentType::all();
+
         $sections = Section::all();
-        return view('repositori.inputdocument', compact('documents', 'document_types', 'sections'));
+
+        return view('repositori.inputdocument', compact('document_types', 'sections'));
     }
 
     public function store(Request $request)
     {
+        if(Auth::user()->role == 'lainnya')
+        {
+            return redirect('/home');
+        }
+
+        session()->put('menu','document');
+
+        session()->put('submenu','insertdoc');
+
         $request->validate([
-            'no' => 'required|string|unique:documents|max:50',
+            'no' => 'required|string|max:50|unique:documents,no',
             'nama_dokumen' => 'required|string|max:255',
             'document_type_id' => 'required',
             'section_id' => 'required',
             'sifat_dokumen' => 'required',
-            'tanggal_terbit' => 'required|date',
+            'tanggal_terbit' => 'required|before:tomorrow',
             'perihal' => 'required|string|max:255',
             'file_dokumen' => 'required|mimes:pdf'
         ]);
 
         $name = $request->file('file_dokumen')->getClientOriginalName();
-        $name = date('dFY_His') . $name;
+        $name = date('dmY_His_') . $name;
         $request->file('file_dokumen')->move(public_path('/documents'), $name);
 
         Document::create([
@@ -66,28 +93,58 @@ class DocumentController extends Controller
             'file_dokumen' => $name
         ]);
          
-        return redirect('/document/inputdocument')->with('success','Dokumen baru telah berhasil ditambah!');
+        return redirect('/document')->with('success','Dokumen baru telah berhasil ditambah!');
     }
 
     public function edit($no)
     {
+        if(Auth::user()->role == 'lainnya')
+        {
+            return redirect('/home');
+        }
+
+        session()->put('menu','document');
+
+        session()->put('submenu','rekapdoc');
+        
+        if(Auth::user()->role == 'lainnya')
+        {
+            return redirect('/home');
+        }
+
+        session()->put('menu','document');
+
+        session()->put('submenu','rekapdoc');
+
         $documents = Document::findOrFail($no);
+
         $document_types = DocumentType::all();
+
         $sections = Section::all();
+
         return view('repositori.editdocument', compact('documents', 'document_types', 'sections'));
     }
 
     public function update(Request $request, $no)
     {
+        if(Auth::user()->role == 'lainnya')
+        {
+            return redirect('/home');
+        }
+
+        session()->put('menu','document');
+
+        session()->put('submenu','rekapdoc');
+
         $request->validate([
-            'no' => 'required|string|max:50',
+            'no' => 'required|string|max:50|unique:documents,no,'.$no.',no',
             'nama_dokumen' => 'required|string|max:255',
-            'document_type_id' => 'required|integer|max:20',
-            'section_id' => 'required|integer|max:20',
-            'sifat_dokumen' => 'required|string',
-            'tanggal_terbit' => 'required|date',
+            'document_type_id' => 'required',
+            'section_id' => 'required',
+            'sifat_dokumen' => 'required',
+            'tanggal_terbit' => 'required|before:tomorrow',
             'perihal' => 'required|string|max:255',
-            'file_dokumen' => 'mimes:pdf|max:2048'
+            'file_dokumen' => 'mimes:pdf'
         ]);
 
         Document::where('no', $no)
@@ -104,7 +161,7 @@ class DocumentController extends Controller
         if($request->has('file_dokumen'))
         {
             $name = $request->file('file_dokumen')->getClientOriginalName();;
-            $name = date('dFY_His') . $name;
+            $name = date('dmY_His_') . $name;
             $request->file('file_dokumen')->move(public_path('/documents'), $name);
 
             Document::where('no', $no)
@@ -118,14 +175,70 @@ class DocumentController extends Controller
 
     public function detail($no)
     {
-        $documents = Document::find($no);
+        session()->put('menu','document');
+
+        session()->put('submenu','rekapdoc');
+        
+        $documents = Document::findOrFail($no);
+
+        if((Auth::user()->role == 'lainnya') && $documents->section_id != Auth::user()->section_id && $documents->sifat_dokumen == 'rahasia')
+        {
+            return redirect('/document');
+        }
+
         return view('repositori.detaildocument', compact('documents'));
     }
 
     public function destroy($no)
     {
+        if(Auth::user()->role == 'lainnya')
+        {
+            return redirect('/home');
+        }
+
+        session()->put('menu','document');
+
+        session()->put('submenu','rekapdoc');
+
         Document::destroy($no);
 
         return redirect('/document')->with('success','Data Dokumen berhasil dihapus!');
+    }
+
+    public function search(Request $request)
+    {
+        session()->put('menu','document');
+        session()->put('submenu','rekapdoc');
+
+        $types = DocumentType::all();
+        $sections = Section::all();
+
+        if(Auth::user()->role == "lainnya")
+        {
+            $documents = Document::where(function($query)
+                        {
+                            $query->where('sifat_dokumen', 'umum')->orWhere('section_id', Auth::user()->section_id); 
+                        })
+                        ->when($request->type != '0', function($query) use ($request){
+                            return $query->where('document_type_id', $request->type);
+                        })
+                        ->when($request->section != '0', function($query) use ($request){
+                            return $query->where('section_id', $request->section);
+                        })->get();
+
+            return view('repositori.rekapdocument', compact('documents', 'types', 'sections'));
+        }
+        else
+        {
+            $documents = Document::select('*')
+                        ->when($request->type != '0', function($query) use ($request){
+                            return $query->where('document_type_id', $request->type);
+                        })
+                        ->when($request->section != '0', function($query) use ($request){
+                            return $query->where('section_id', $request->section);
+                        })->get();
+
+            return view('repositori.rekapdocument', compact('documents', 'types', 'sections'));
+        }
     }
 }
