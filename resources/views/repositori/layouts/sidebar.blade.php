@@ -33,11 +33,11 @@
         <ul class="collapse list-unstyled" id="dokumen">
           @if (Auth::user()->role != 'lainnya')
           <li class = "@if(session()->has('submenu') && session()->get('submenu') == 'insertdoc') active @endif">
-              <a href="#">Input Dokumen</a>
+              <a href="{{url('/document/inputdocument')}}">Input Dokumen</a>
           </li>
           @endif
           <li class = "@if(session()->has('submenu') && session()->get('submenu') == 'rekapdoc') active @endif">
-              <a href="#">Rekap Dokumen</a>
+              <a href="{{url('/document')}}">Rekap Dokumen</a>
           </li>
         </ul>
       </li>

@@ -3,9 +3,12 @@
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\DocumentController;
+use App\Http\Controllers\DownloadController;
 use App\Http\Controllers\InmailController;
 use App\Http\Controllers\OutmailController;
 use App\Http\Controllers\PrintController;
+
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -118,6 +121,22 @@ Route::get('/print_outmail',[PrintController::class, 'printOutmail'])->name('pri
 Route::get('/laporan_disposisi',[PrintController::class, 'viewDisposition'])->name('laporan-disposisi');
 
 Route::get('/print_disposisi',[PrintController::class, 'printDisposition'])->name('print-disposisi');
+
+Route::get('/document', [DocumentController::class, 'index']);
+
+Route::get('/document/inputdocument', [DocumentController::class, 'create']);
+
+Route::post('/document/inputdocument', [DocumentController::class, 'store']);
+
+Route::get('/document/editdocument/{no}', [DocumentController::class, 'edit']);
+
+Route::put('/document/editdocument/{no}', [DocumentController::class, 'update']);
+
+Route::delete('/document/{no}', [DocumentController::class, 'destroy']);
+
+Route::get('/document/download/{file_dokumen}', [DownloadController::class, 'download']);
+
+Route::get('/document/detaildocument/{no}', [DocumentController::class, 'detail']);
 
 Route::get('/logout',function(){
 
