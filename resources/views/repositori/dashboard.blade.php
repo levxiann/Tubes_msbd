@@ -13,7 +13,7 @@
         </div>
         <div class="card-body">
           <h5 class="card-title">Selamat Datang di Aplikasi Repositori Dokumen Sekolah</h5>
-          <p class="card-text">{{Auth::user()->role}} {{Auth::user()->name}}</p>
+          <p class="card-text">{{Auth::user()->section_id}} , {{Auth::user()->role}}</p>
         </div>
       </div>
       </div> {{-- wajib pakai --}}

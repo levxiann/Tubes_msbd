@@ -72,11 +72,11 @@
       @endif
       @if (Auth::user()->role == 'admin')
       <li>
-          <a href="#">Data User</a>
+          <a href="{{ Route('users_data') }}">Data User</a>
       </li>
       @endif
       <li>
-        <a href="#">Profile</a>
+        <a href="{{ Route('users_profile') }}">Profile</a>
       </li>
       <li>
         <a href="{{url('/logout')}}">Logout</a>
