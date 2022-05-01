@@ -77,11 +77,11 @@
       @endif
       @if (Auth::user()->role == 'admin')
       <li class = "@if(session()->has('menu') && session()->get('menu') == 'users') active @endif">
-          <a href="#"> <span class="far fa-users"></span> Data User</a>
+          <a href="{{ Route('users_data') }}"> <span class="far fa-users"></span> Data User</a>
       </li>
       @endif
       <li class = "@if(session()->has('menu') && session()->get('menu') == 'profil') active @endif">
-        <a href="#"> <span class="far fa-user"></span> Profile</a>
+        <a href="{{ Route('users_profile') }}"> <span class="far fa-user"></span> Profile</a>
       </li>
       <li>
         <a href="{{url('/logout')}}"><span class="far fa-sign-out"></span> Logout</a>
