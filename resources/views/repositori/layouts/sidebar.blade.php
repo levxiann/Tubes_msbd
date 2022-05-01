@@ -14,16 +14,16 @@
         <a href="#jenis" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Data Jenis</a>
         <ul class="collapse list-unstyled" id="jenis">
           <li>
-              <a href="#">Kelompok Dokumen</a>
+              <a href="{{url('document_group') }}">Kelompok Dokumen</a>
           </li>
           <li>
-              <a href="#">Jenis Dokumen</a>
+              <a href="{{url('document_type')}}">Jenis Dokumen</a>
           </li>
           <li>
-              <a href="#">Jenis Surat</a>
+              <a href="{{url('mail_type')}}">Jenis Surat</a>
           </li>
           <li>
-              <a href="#">Bagian</a>
+              <a href="{{url('section')}}">Bagian</a>
           </li>
         </ul>
       </li>
