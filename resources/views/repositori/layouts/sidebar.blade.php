@@ -71,8 +71,19 @@
           </li>
         </ul>
       </li>
-      <li class = "@if(session()->has('menu') && session()->get('menu') == 'laporan') active @endif">
-        <a href="#"> <span class="far fa-print"></span> Laporan</a>
+      <li class="@if(session()->has('menu') && session()->get('menu') == 'laporan') active @endif">
+        <a href="#laporan" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Laporan</a>
+        <ul class="collapse list-unstyled" id="laporan">
+          <li class="@if(session()->has('submenu') && session()->get('submenu') == 'laporaninmail') active @endif">
+              <a href="/laporan_inmail">Laporan Surat Masuk</a>
+          </li>
+          <li class="@if(session()->has('submenu') && session()->get('submenu') == 'laporanoutmail') active @endif">
+              <a href="/laporan_outmail">Laporan Surat Keluar</a>
+          </li>
+          <li class="@if(session()->has('submenu') && session()->get('submenu') == 'laporandispo') active @endif">
+              <a href="{{route('laporan-disposisi')}}">Laporan Surat Disposisi</a>
+          </li>
+        </ul>
       </li>
       @endif
       @if (Auth::user()->role == 'admin')
