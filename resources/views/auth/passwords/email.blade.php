@@ -40,6 +40,10 @@
                         {{ __('Send Password Reset Link') }}
                     </button>
                 </div>
+
+                <div class="text-center p-t-12">
+                    <a href="{{route('login')}}" class="txt2">Back to login</a>
+                </div>
             </form>
         </div>
     </div>

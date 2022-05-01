@@ -19,7 +19,7 @@
                     <input id="username" placeholder="Username" type="text" class="input100 @error('username') is-invalid @enderror" name="username" value="{{ old('username') }}" required autocomplete="username" autofocus>
                     @error('username')
                         <span class="pt-3 invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
+                            <strong>Username / Password Invalid</strong>
                         </span>
                     @enderror
                     <span class="focus-input100"></span>
