@@ -1,99 +1,73 @@
 @extends('repositori.layouts.main')
 
 @section('content')
-@include('repositori.layouts.sidebar')
+    {{-- Sidebar --}}
+    @include('repositori.layouts.sidebar')
+    {{-- End Sidebar --}}
 
-<div class="container mt-3 ml-3 mr-4">
-  <h2>Detail Dokumen</h2><hr>
-  <form method="POST" enctype="multipart/form-data">
-    @csrf
+    <!-- Page Content  -->
+    <div id="content" class="p-4 p-md-5 pt-5"> {{-- wajib pakai --}}
+        @if (session('success'))
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <strong>Sukses!</strong> {{ session('success') }}
+            </div>
+        @endif
+        @if (session('error'))
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <strong>Gagal!</strong> {{ session('error') }}
+            </div>
+        @endif
+        <h3>Detail Dokumen</h3>
+        <table class="table table-striped" id="inmail">
+            <thead>
+                <tr>
+                    <th scope="col">No Dokumen</th>
+                    <th scope="col">{{$documents->no}}</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th scope="row">Nama Dokumen</th>
+                    <td>{{$documents->nama_dokumen}}</td>
+                </tr>
+                <tr>
+                  <th scope="row">Kelompok Dokumen</th>
+                  <td>{{$documents->document_type->document_group->nama_kelompok_dokumen}}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Jenis Dokumen</th>
+                    <td>{{$documents->document_type->nama_jenis_dokumen}}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Pemilik Dokumen</th>
+                    <td>{{$documents->section->nama_bagian}}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Tanggal Terbit</th>
+                    <td>{{date('d F Y', strtotime($documents->tanggal_terbit))}}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Perihal</th>
+                    <td>{{$documents->perihal}}</td>
+                </tr>
+                <tr>
+                  <th scope="row">Sifat</th>
+                  <td>{{$documents->sifat_dokumen}}</td>
+                </tr>
+                <tr>
+                    <th scope="row">File</th>
+                    <td>
+                        <object data="{{asset('documents/'.$documents->file_dokumen)}}" type="application/pdf">
+                            <iframe src="https://docs.google.com/viewer?url=your_url_to_pdf&embedded=true"></iframe>
+                        </object>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <a href="{{url('/document')}}" class="btn btn-sm btn-primary">Kembali</a>
+    </div> {{-- wajib pakai --}}
+</div> {{-- wajib pakai --}}
 
-    <!-- Breadcrumb -->
-    <nav aria-label="breadcrumb" class="main-breadcrumb">
-        <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="{{url('/document')}}">Rekap Dokumen</a></li>
-          <li class="breadcrumb-item active" aria-current="page">Data Dokumen {{$documents->no}}</li>
-        </ol>
-      </nav>
-      <!-- /Breadcrumb -->
-
-    <div class="col-md-8">
-        <div class="card mb-3">
-          <div class="card-body">
-            <div class="row">
-              <div class="col-sm-3">
-                <h6 class="mb-0">No. Dokumen</h6>
-              </div>
-              <div class="col-sm-9 text-secondary">
-                {{$documents->no}}
-              </div>
-            </div>
-            <hr>
-            <div class="row">
-              <div class="col-sm-3">
-                <h6 class="mb-0">Nama Dokumen</h6>
-              </div>
-              <div class="col-sm-9 text-secondary">
-                {{$documents->nama_dokumen}}
-              </div>
-            </div>
-            <hr>
-            <div class="row">
-              <div class="col-sm-3">
-                <h6 class="mb-0">Perihal</h6>
-              </div>
-              <div class="col-sm-9 text-secondary">
-                {{$documents->perihal}}
-              </div>
-            </div>
-            <hr>
-            <div class="row">
-              <div class="col-sm-3">
-                <h6 class="mb-0">Jenis Dokumen</h6>
-              </div>
-              <div class="col-sm-9 text-secondary">
-                {{$documents->document_type->nama_jenis_dokumen}}
-              </div>
-            </div>
-            <hr>
-            <div class="row">
-              <div class="col-sm-3">
-                <h6 class="mb-0">Pemilik Dokumen</h6>
-              </div>
-              <div class="col-sm-9 text-secondary">
-                {{$documents->section->nama_bagian}}
-              </div>
-            </div>
-            <hr>
-            <div class="row">
-                <div class="col-sm-3">
-                  <h6 class="mb-0">Sifat Dokumen</h6>
-                </div>
-                <div class="col-sm-9 text-secondary">
-                  {{$documents->sifat_dokumen}}
-                </div>
-              </div>
-            <hr>
-            <div class="row">
-                <div class="col-sm-3">
-                  <h6 class="mb-0">Tanggal Terbit</h6>
-                </div>
-                <div class="col-sm-9 text-secondary">
-                  {{$documents->tanggal_terbit}}
-                </div>
-              </div>
-            <hr>
-            <div class="row">
-                <div class="col-sm-3">
-                  <h6 class="mb-0">File Dokumen</h6>
-                </div>
-                <div class="col-sm-9 text-secondary">
-                  {{$documents->file_dokumen}}
-                </div>
-              </div>
-            <hr>
-            
-          </div>
-        </div> 
+<script src="{{asset('sidebar_template/js/jquery.min.js')}}"></script>
 @endsection
        

@@ -124,6 +124,8 @@ Route::get('/print_disposisi',[PrintController::class, 'printDisposition'])->nam
 
 Route::get('/document', [DocumentController::class, 'index']);
 
+Route::get('/document/search', [DocumentController::class, 'search']);
+
 Route::get('/document/inputdocument', [DocumentController::class, 'create']);
 
 Route::post('/document/inputdocument', [DocumentController::class, 'store']);
@@ -136,7 +138,7 @@ Route::delete('/document/{no}', [DocumentController::class, 'destroy']);
 
 Route::get('/document/download/{file_dokumen}', [DownloadController::class, 'download']);
 
-Route::get('/document/detaildocument/{no}', [DocumentController::class, 'detail']);
+Route::get('/document/detaildocument/{no}', [DocumentController::class, 'detail']); 
 
 Route::get('/logout',function(){
 

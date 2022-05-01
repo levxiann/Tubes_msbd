@@ -27,6 +27,10 @@
             </thead>
             <tbody>
                 <tr>
+                    <th scope="row">No Disposisi</th>
+                    <td>{{$inmail->disposition->no}}</td>
+                </tr>
+                <tr>
                     <th scope="row">Jenis Surat</th>
                     <td>{{$inmail->mail_type->nama_jenis_surat}}</td>
                 </tr>

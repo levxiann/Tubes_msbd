@@ -136,6 +136,11 @@ class InmailController extends Controller
 
         $inmail = Inmail::findOrFail($id);
 
+        if((Auth::user()->role == 'lainnya') && $inmail->section_id != Auth::user()->section_id)
+        {
+            return redirect('/inmail');
+        }
+
         return view('repositori.inmaildetail', compact('inmail'));
     }
 
@@ -298,6 +303,29 @@ class InmailController extends Controller
         session()->put('submenu','rekapdispo');
 
         $inmail = Inmail::findOrFail($id);
+
+        $cek = 'no';
+
+        if($inmail->disposition == NULL)
+        {
+            return redirect('/inmails/dispo');
+        }
+
+        if(Auth::user()->role == 'lainnya')
+        {
+            foreach($inmail->disposition->destinations as $dest)
+            {
+                if($dest->section_id == Auth::user()->section_id)
+                {
+                    $cek = 'ada';
+                    break;
+                }
+            }
+            if($cek == 'no')
+            {
+                return redirect('/inmails/dispo');
+            }
+        }
 
         return view('repositori.dispodetail', compact('inmail'));
     }
