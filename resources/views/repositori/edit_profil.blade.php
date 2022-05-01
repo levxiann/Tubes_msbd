@@ -2,109 +2,84 @@
 
 @section('content')
 
-<div class="container mt-3">
-    <h2>Edit Profil</h2><hr>
-
-    @foreach($users as $user)
-    <form action="{{ url('profil_user/update_profil') }}" method="POST" enctype="multipart/form-data">
-      @csrf
-      <div class="form-group mb-3">
-          <label for="id">id</label>
-          <input type="text" class="form-control @error('id') is-invalid @enderror" id="id"  name="id" disabled value="{{ $user->id }}">
-          @error('id')
-              <span class="invalid-feedback" role="alert">
-                  <strong>{{ $message }}</strong>
-              </span>
-          @enderror
-         
-      </div>
-      <div class="form-group mb-3">
-          <label for="name">Nama</label>
-          <input type="text" class="form-control @error('name') is-invalid @enderror" id="name"  name="name" value="{{ $user->name }}">
-          @error('name')
-              <span class="invalid-feedback" role="alert">
-                  <strong>{{ $message }}</strong>
-              </span>
-          @enderror
-      </div>
-      <div class="form-group mb-3">
-          <label for="username">Username</label>
-          <input type="long-text" class="form-control @error('username') is-invalid @enderror" id="username" name="username" value="{{ $user->username }}">
-          @error('username')
-              <span class="invalid-feedback" role="alert">
-                  <strong>{{ $message }}</strong>
-              </span>
-          @enderror
-      </div>
-      <div class="form-group mb-3">
-          <label for="email">email</label>
-          <input type="text" class="form-control @error('email') is-invalid @enderror" id="email"  name="email" value="{{ $user->email }}">
-          @error('email')
-              <span class="invalid-feedback" role="alert">
-                  <strong>{{ $message }}</strong>
-              </span>
-          @enderror
-      </div>
-      {{-- <div class="form-group mb-3">
-          <label for="password">password</label>
-          <input type="text" class="form-control @error('password') is-invalid @enderror" id="password"  name="password" value="" autofocus>
-          @error('password')
-              <span class="invalid-feedback" role="alert">
-                  <strong>{{ $message }}</strong>
-              </span>
-          @enderror
-      </div> --}}
-      <div class="form-group mb-3">
-          <label for="tanggal_lahir">tanggal lahir</label>
-          <input type="date" class="form-control @error('tanggal_lahir') is-invalid @enderror" id="tanggal_lahir"  name="tanggal_lahir" value="{{ $user->tanggal_lahir }}">
-          @error('tanggal_lahir')
-              <span class="invalid-feedback" role="alert">
-                  <strong>{{ $message }}</strong>
-              </span>
-          @enderror
-      </div>    
-      <div class="form-group mb-3">
-          <label for="alamat">Alamat</label>
-          <input type="long-text" class="form-control @error('alamat') is-invalid @enderror" id="alamat"  name="alamat" value="{{ $user->alamat }}">
-          @error('alamat')
-              <span class="invalid-feedback" role="alert">
-                  <strong>{{ $message }}</strong>
-              </span>
-          @enderror
-      </div>
-      <div class="form-group mb-3">
-        <label for="no_hp">No Hp</label>
-        <input type="number" class="form-control @error('no_hp') is-invalid @enderror" id="no_hp"  name="no_hp" value="{{ $user->no_hp }}">
-        @error('no_hp')
-            <span class="invalid-feedback" role="alert">
-                <strong>{{ $message }}</strong>
-            </span>
-        @enderror
-    </div>
-    {{-- <div class="form-group mb-3">
-        <label for="role">Role</label>
-        <input type="text" class="form-control @error('role') is-invalid @enderror" id="role"  name="role" value="{{ $user->role }}">
-        @error('role')
-            <span class="invalid-feedback" role="alert">
-                <strong>{{ $message }}</strong>
-            </span>
-        @enderror
-    </div>
-    <div class="form-group mb-3">
-        <label for="section_id">Section id</label>
-        <input type="number" class="form-control @error('section_id') is-invalid @enderror" id="section_id"  name="section_id" value="{{ $user->section_id }}">
-        @error('section_id')
-            <span class="invalid-feedback" role="alert">
-                <strong>{{ $message }}</strong>
-            </span>
-        @enderror
-    </div> --}}
-      <div class="form-group mb-3">
-          <a class="btn btn-light" href="{{ url('/profil_user') }}">Cancel</a>
-          <button type="submit" class="btn btn-primary confirm-button"><span class="far fa-save"></span> Save</button>
-      </div>
+{{-- Sidebar --}}
+@include('repositori.layouts.sidebar')
+{{-- End Sidebar --}}
+<div id="content" class="p-4 p-md-5 pt-5"> {{-- wajib pakai --}}    
+    @if (session('success'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <strong>Sukses!</strong> {{ session('success') }}
+        </div>
+    @endif
+    @if (session('error'))
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <strong>Gagal!</strong> {{ session('error') }}
+        </div>
+    @endif
+    <h3>Edit Data Profil</h3>
+    <form action="{{ url('/profil_user/update_profil') }}" method="POST">
+        @csrf
+        @method('PATCH')
+        <div class="form-group mb-3">
+            <label for="name">Name</label>
+            <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" placeholder="Masukkan nama" name="name" value="{{Auth::user()->name}}">
+            @error('name')
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+            @enderror
+        </div>
+        <div class="form-group mb-3">
+            <label for="username">Username</label>
+            <input type="text" class="form-control @error('username') is-invalid @enderror" id="username" placeholder="Masukkan username" name="username" value="{{Auth::user()->username}}">
+            @error('username')
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+            @enderror
+        </div>
+        <div class="form-group mb-3">
+            <label for="email">Email</label>
+            <input type="email" class="form-control @error('email') is-invalid @enderror" id="email" placeholder="Masukkan email" name="email" value="{{Auth::user()->email}}">
+            @error('email')
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+            @enderror
+        </div>
+        <div class="form-group mb-3">
+            <label for="tanggal_lahir">Tanggal Lahir</label>
+            <input type="date" class="form-control @error('tanggal_lahir') is-invalid @enderror" id="tanggal_lahir" placeholder="Masukkan tangga lahir" name="tanggal_lahir" value="{{Auth::user()->tanggal_lahir}}">
+            @error('tanggal_lahir')
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+            @enderror
+        </div>    
+        <div class="form-group mb-3">
+            <label for="alamat">Alamat</label>
+            <input type="text" class="form-control @error('alamat') is-invalid @enderror" id="alamat" placeholder="Masukkan alamat" name="alamat" value="{{Auth::user()->alamat}}">
+            @error('alamat')
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+            @enderror
+        </div>
+        <div class="form-group mb-3">
+            <label for="no_hp">No Hp</label>
+            <input type="number" class="form-control @error('no_hp') is-invalid @enderror" id="no_hp" placeholder="no_hp" name="no_hp" value="{{Auth::user()->no_hp}}">
+            @error('no_hp')
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+            @enderror
+        </div>
+        <div class="form-group mb-3">
+            <a class="btn btn-light" href="{{ url('/profil_user') }}">Cancel</a>
+            <button type="submit" class="btn btn-primary confirm-button"><span class="far fa-save"></span> Save</button>
+        </div>
     </form>
-    @endforeach
-  </div>
-  
+</div> {{-- wajib pakai --}}
+</div> {{-- wajib pakai --}}
+<script src="{{asset('sidebar_template/js/jquery.min.js')}}"></script>
   @endsection

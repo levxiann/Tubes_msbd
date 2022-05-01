@@ -88,23 +88,23 @@ Route::get('/outmail/download/{no}', [OutmailController::class, 'cetakOutmail'])
 
 Route::delete('/outmail/hapus/{no}', [OutmailController::class, 'destroy']);
 
-Route::get('/Data_Users', [App\Http\Controllers\AccountController::class, 'index'])->name('users_data');
+Route::get('/Data_Users', [AccountController::class, 'index'])->name('users_data');
 
 Route::get('/Data_Users/add', [AccountController::class, 'adding_form']);
 
-Route::post('/Data_Users/Tambah_Data', [App\Http\Controllers\AccountController::class, 'store'])->name('add_data');
+Route::post('/Data_Users/Tambah_Data', [AccountController::class, 'store'])->name('add_data');
 
-Route::get('/Data_Users/edit/{id}', [App\Http\Controllers\AccountController::class, 'edit'] );
+Route::get('/Data_Users/edit/{id}', [AccountController::class, 'edit'] );
 
-Route::post('/Data_Users/update_data',[App\Http\Controllers\AccountController::class, 'update'] );
+Route::patch('/Data_Users/update_data/{id}',[AccountController::class, 'update'] );
 
-Route::get('/Data_Users/hapus/{id}', [App\Http\Controllers\AccountController::class, 'hapus'] );
+Route::delete('/Data_Users/hapus/{id}', [AccountController::class, 'hapus'] );
 
-Route::get('/profil_user', [App\Http\Controllers\AccountController::class, 'index1'])->name('users_profile');
+Route::get('/profil_user', [AccountController::class, 'index1'])->name('users_profile');
 
-Route::get('/profil_user/edit/{id}', [App\Http\Controllers\AccountController::class, 'edit_prof'] );
+Route::get('/profil_user/edit', [AccountController::class, 'edit_prof'] );
 
-Route::post('/profil_user/update_profil',[App\Http\Controllers\AccountController::class, 'update_prof'] );
+Route::patch('/profil_user/update_profil',[AccountController::class, 'update_prof'] );
 
 Route::get('/logout',function(){
 
