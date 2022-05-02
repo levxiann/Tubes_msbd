@@ -14,16 +14,16 @@
         <a href="#jenis" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"> <span class="far fa-list"></span> Data Jenis</a>
         <ul class="collapse list-unstyled" id="jenis">
           <li class = "@if(session()->has('submenu') && session()->get('submenu') == 'group') active @endif">
-              <a href="#">Kelompok Dokumen</a>
+              <a href="{{url('/document_group') }}">Kelompok Dokumen</a>
           </li>
           <li class = "@if(session()->has('submenu') && session()->get('submenu') == 'doctype') active @endif">
-              <a href="#">Jenis Dokumen</a>
+              <a href="{{url('/document_type')}}">Jenis Dokumen</a>
           </li>
           <li class = "@if(session()->has('submenu') && session()->get('submenu') == 'mailtype') active @endif">
-              <a href="#">Jenis Surat</a>
+              <a href="{{url('/mail_type')}}">Jenis Surat</a>
           </li>
           <li class = "@if(session()->has('submenu') && session()->get('submenu') == 'section') active @endif">
-              <a href="#">Bagian</a>
+              <a href="{{url('/section')}}">Bagian</a>
           </li>
         </ul>
       </li>
