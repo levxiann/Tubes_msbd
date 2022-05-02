@@ -13,10 +13,11 @@
         </div>
         <div class="card-body">
           <h5 class="card-title">Selamat Datang di Aplikasi Repositori Dokumen Sekolah</h5>
-          <p class="card-text">{{Auth::user()->role}} {{Auth::user()->name}}</p>
+          <p class="card-text">{{Auth::user()->role}} {{Auth::user()->section->nama_bagian}} {{Auth::user()->name}}</p>
         </div>
       </div>
       </div> {{-- wajib pakai --}}
-	</div> {{-- wajib pakai --}}
+  </div> {{-- wajib pakai --}}
+  <script src="{{asset('sidebar_template/js/jquery.min.js')}}"></script>
 @endsection
 
