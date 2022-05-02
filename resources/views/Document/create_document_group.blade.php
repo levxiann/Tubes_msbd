@@ -12,12 +12,11 @@
           Tambah Kelompok Dokumen
         </div>
         <div class="card-body">
-        <form action="{{url('document_group/create')}}" method="POST" enctype="multipart/form-data">
+        <form action="{{url('document_group/store')}}" method="POST" enctype="multipart/form-data">
             @csrf
-            @method('PUT')
             <div class="form-group mb-3">
                 <label for="name">Nama Kelompok Dokumen</label>
-                <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" placeholder="Masukkan nama kelompok dokumen baru" name="name">
+                <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" placeholder="Masukkan nama kelompok dokumen baru" name="name" value="{{old('name')}}">
                 @error('name')
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
@@ -33,4 +32,5 @@
       </div>
       </div> {{-- wajib pakai --}}
   </div> {{-- wajib pakai --}}
+  <script src="{{asset('sidebar_template/js/jquery.min.js')}}"></script>
 @endsection

@@ -12,7 +12,7 @@
           Update Kelompok Dokumen
         </div>
         <div class="card-body">
-        <form action="{{url('document_group/update/'.$group->id) }}" method="POST" enctype="multipart/form-data">
+        <form action="{{url('document_group/update/'.$group->id) }}" method="POST">
             @csrf
             @method('PUT')
             <div class="form-group mb-3">
@@ -37,4 +37,5 @@
       </div>
       </div> {{-- wajib pakai --}}
   </div> {{-- wajib pakai --}}
+  <script src="{{asset('sidebar_template/js/jquery.min.js')}}"></script>
 @endsection

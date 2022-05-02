@@ -11,7 +11,6 @@
       @if (session('success'))
         <div class="alert alert-success alert-dismissible fade show" role="alert">
         <strong>Sukses!</strong> {{ session('success') }}
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
       @endif
       <div class="card">
@@ -19,7 +18,7 @@
           
           <div class="d-grid d-md-flex justify-content-between">
               Kelompok Dokumen
-            <a href="{{url('document_group/create')}}" class="btn btn-sm btn-flat btn-success" style="font-size: 0.8em;">Add document group</a>
+            <a href="{{url('document_group/create')}}" class="btn btn-sm btn-flat btn-success" style="font-size: 0.8em;"><span class="far fa-plus"></span> Tambah kelompok dokumen</a>
           </div>
         </div>
         <div class="card-body">
@@ -36,17 +35,25 @@
                     <tr>
                         <td>{{$group->id}}</td>
                         <td>{{$group->nama_kelompok_dokumen}}</td>
-                        <td><a href="{{url('document_group/update/'.$group->id) }}" class="btn btn-sm btn-flat btn-warning"><span class="far fa-edit"></span> Update</a></td>
+                        <td>
+                          <form method="GET" action="{{url('document_group/update/'.$group->id) }}" style="display: inline-block;">
+                            @csrf
+                            <button type="submit" class="btn btn-sm btn-warning"><span class="far fa-edit"></span> Edit</button>
+                          </form>
+                        </td>
                     </tr>
                     @endforeach
                 </tbody>
             </table>
         </div>
-        <!--Pagination-->
-        <div class="d-flex mt-3 justify-content-center me-2">
-            {!! $groups->links() !!}
-        </div>
       </div>
       </div> {{-- wajib pakai --}}
   </div> {{-- wajib pakai --}}
+  <script src="{{asset('sidebar_template/js/jquery.min.js')}}"></script>
+  <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
+  <script>
+      $(document).ready( function () {
+      $('#document_group').DataTable();
+      } );
+  </script>
 @endsection

@@ -17,6 +17,12 @@ class TypeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function index()
     {
         //
@@ -95,24 +101,44 @@ class TypeController extends Controller
      */
     public function group()
     {
-        $groups = DB::table('document_groups')->paginate(10);
+        if(Auth::user()->role == 'lainnya')
+        {
+            return redirect('/home');
+        }
+
+        session()->put('menu','jenis');
+        session()->put('submenu','group');
+
+        $groups = DocumentGroup::all();
+
         return view('Document.document_group', compact('groups'));
     }
 
     public function group_create()
     {
+        if(Auth::user()->role == 'lainnya')
+        {
+            return redirect('/home');
+        }
+
+        session()->put('menu','jenis');
+        session()->put('submenu','group');
+
         return view('Document.create_document_group');
     }
 
     public function group_insert(Request $request)
     {
-        if(Auth::user()->section_id != 1 && Auth::user()->section_id != 2)
+        if(Auth::user()->role == 'lainnya')
         {
-            return redirect('/');
+            return redirect('/home');
         }
 
+        session()->put('menu','jenis');
+        session()->put('submenu','group');
+
         $request->validate([
-            'name' => 'required|string|max:200',
+            'name' => 'required|string|max:255',
         ]);
 
         DocumentGroup::create([
@@ -122,12 +148,15 @@ class TypeController extends Controller
         return redirect('document_group')->with('success','Data kelompok dokumen baru berhasil ditambah!');
     }
 
-    public function group_edit($id)
+    public function group_edit(Request $request, $id)
     {
-        if(Auth::user()->section_id != 1 && Auth::user()->section_id != 2)
+        if(Auth::user()->role == 'lainnya')
         {
-            return redirect('/');
+            return redirect('/home');
         }
+
+        session()->put('menu','jenis');
+        session()->put('submenu','group');
 
         $group = DocumentGroup::findOrFail($id);
 
@@ -136,13 +165,16 @@ class TypeController extends Controller
 
     public function group_update(Request $request, $id)
     {
-        if(Auth::user()->section_id != 1 && Auth::user()->section_id != 2)
+        if(Auth::user()->role == 'lainnya')
         {
-            return redirect('/');
+            return redirect('/home');
         }
 
+        session()->put('menu','jenis');
+        session()->put('submenu','group');
+
         $request->validate([
-            'name' => 'required|string|max:200',
+            'name' => 'required|string|max:255',
         ]);
 
         DocumentGroup::where('id', $id)
@@ -155,22 +187,43 @@ class TypeController extends Controller
 
     public function type()
     {
-        $types = DocumentType::with('document_group')->paginate(10);
+        if(Auth::user()->role == 'lainnya')
+        {
+            return redirect('/home');
+        }
+
+        session()->put('menu','jenis');
+        session()->put('submenu','doc_type');
+
+        $types = DocumentType::all();
+
         return view('Document.document_type', compact('types'));
     }
 
     public function type_create()
     {
-        $groups = DocumentGroup::pluck('nama_kelompok_dokumen','id');
+        if(Auth::user()->role == 'lainnya')
+        {
+            return redirect('/home');
+        }
+
+        session()->put('menu','jenis');
+        session()->put('submenu','doc_type');
+
+        $groups = DocumentGroup::all();
+        
         return view('Document.create_document_type', compact('groups'));
     }
 
     public function type_insert(Request $request)
     {
-        if(Auth::user()->section_id != 1 && Auth::user()->section_id != 2)
+        if(Auth::user()->role == 'lainnya')
         {
-            return redirect('/');
+            return redirect('/home');
         }
+
+        session()->put('menu','jenis');
+        session()->put('submenu','doc_type');
 
         $request->validate([
             'name' => 'required|string|max:200',
@@ -185,25 +238,31 @@ class TypeController extends Controller
         return redirect('document_type')->with('success','Data jenis dokumen baru berhasil ditambah!');
     }
 
-    public function type_edit($id)
+    public function type_edit(Request $request, $id)
     {
-        if(Auth::user()->section_id != 1 && Auth::user()->section_id != 2)
+        if(Auth::user()->role == 'lainnya')
         {
-            return redirect('/');
+            return redirect('/home');
         }
 
+        session()->put('menu','jenis');
+        session()->put('submenu','doc_type');
+
         $type = DocumentType::findOrFail($id);
-        $groups = DocumentGroup::pluck('nama_kelompok_dokumen','id');
+        $groups = DocumentGroup::all();
 
         return view('Document.edittype', compact('type','groups'));
     }
 
     public function type_update(Request $request, $id)
     {
-        if(Auth::user()->section_id != 1 && Auth::user()->section_id != 2)
+        if(Auth::user()->role == 'lainnya')
         {
-            return redirect('/');
+            return redirect('/home');
         }
+
+        session()->put('menu','jenis');
+        session()->put('submenu','doc_type');
 
         $request->validate([
             'name' => 'required|string|max:200',
@@ -221,24 +280,43 @@ class TypeController extends Controller
 
     public function mail()
     {
-        $mails = DB::table('mail_types')->paginate(10);
+        if(Auth::user()->role == 'lainnya')
+        {
+            return redirect('/home');
+        }
+
+        session()->put('menu','jenis');
+        session()->put('submenu','mailtype');
+
+        $mails = MailType::all();
         return view('Mail.mail_type', compact('mails'));
     }
 
     public function mail_create()
     {
+        if(Auth::user()->role == 'lainnya')
+        {
+            return redirect('/home');
+        }
+
+        session()->put('menu','jenis');
+        session()->put('submenu','mailtype');
+
         return view('Mail.create_type');
     }
 
     public function mail_insert(Request $request)
     {
-        if(Auth::user()->section_id != 1 && Auth::user()->section_id != 2)
+        if(Auth::user()->role == 'lainnya')
         {
-            return redirect('/');
+            return redirect('/home');
         }
 
+        session()->put('menu','jenis');
+        session()->put('submenu','mailtype');
+
         $request->validate([
-            'name' => 'required|string|max:200',
+            'name' => 'required|string|max:255',
         ]);
 
         MailType::create([
@@ -248,12 +326,15 @@ class TypeController extends Controller
         return redirect('mail_type')->with('success','Data jenis surat baru berhasil ditambah!');
     }
 
-    public function mail_edit($id)
+    public function mail_edit(Request $request, $id)
     {
-        if(Auth::user()->section_id != 1 && Auth::user()->section_id != 2)
+        if(Auth::user()->role == 'lainnya')
         {
-            return redirect('/');
+            return redirect('/home');
         }
+
+        session()->put('menu','jenis');
+        session()->put('submenu','mailtype');
 
         $mail = MailType::findOrFail($id);
 
@@ -262,13 +343,16 @@ class TypeController extends Controller
 
     public function mail_update(Request $request, $id)
     {
-        if(Auth::user()->section_id != 1 && Auth::user()->section_id != 2)
+        if(Auth::user()->role == 'lainnya')
         {
-            return redirect('/');
+            return redirect('/home');
         }
 
+        session()->put('menu','jenis');
+        session()->put('submenu','mailtype');
+
         $request->validate([
-            'name' => 'required|string|max:200',
+            'name' => 'required|string|max:255',
         ]);
 
         MailType::where('id', $id)
@@ -281,24 +365,43 @@ class TypeController extends Controller
 
     public function section()
     {
-        $sections = DB::table('sections')->paginate(10);
+        if(Auth::user()->role == 'lainnya')
+        {
+            return redirect('/home');
+        }
+
+        session()->put('menu','jenis');
+        session()->put('submenu','section');
+
+        $sections = Section::all();
         return view('Section.index', compact('sections'));
     }
 
     public function section_create()
     {
+        if(Auth::user()->role == 'lainnya')
+        {
+            return redirect('/home');
+        }
+
+        session()->put('menu','jenis');
+        session()->put('submenu','section');
+
         return view('Section.create');
     }
 
     public function section_insert(Request $request)
     {
-        if(Auth::user()->section_id != 1 && Auth::user()->section_id != 2)
+        if(Auth::user()->role == 'lainnya')
         {
-            return redirect('/');
+            return redirect('/home');
         }
 
+        session()->put('menu','jenis');
+        session()->put('submenu','section');
+
         $request->validate([
-            'name' => 'required|string|max:200',
+            'name' => 'required|string|max:255',
         ]);
 
         Section::create([
@@ -308,12 +411,15 @@ class TypeController extends Controller
         return redirect('section')->with('success','Data bagian baru berhasil ditambah!');
     }
 
-    public function section_edit($id)
+    public function section_edit(Request $request, $id)
     {
-        if(Auth::user()->section_id != 1 && Auth::user()->section_id != 2)
+        if(Auth::user()->role == 'lainnya')
         {
-            return redirect('/');
+            return redirect('/home');
         }
+
+        session()->put('menu','jenis');
+        session()->put('submenu','section');
 
         $section = Section::findOrFail($id);
 
@@ -322,13 +428,16 @@ class TypeController extends Controller
 
     public function section_update(Request $request, $id)
     {
-        if(Auth::user()->section_id != 1 && Auth::user()->section_id != 2)
+        if(Auth::user()->role == 'lainnya')
         {
-            return redirect('/');
+            return redirect('/home');
         }
 
+        session()->put('menu','jenis');
+        session()->put('submenu','section');
+
         $request->validate([
-            'name' => 'required|string|max:200',
+            'name' => 'required|string|max:255',
         ]);
 
         Section::where('id', $id)
