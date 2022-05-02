@@ -12,12 +12,11 @@
           Tambah Jenis Dokumen
         </div>
         <div class="card-body">
-        <form action="{{url('document_type/create')}}" method="POST" enctype="multipart/form-data">
+        <form action="{{url('document_type/store')}}" method="POST" enctype="multipart/form-data">
             @csrf
-            @method('PUT')
             <div class="form-group mb-3">
                 <label for="name">Nama Jenis Dokumen</label>
-                <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" placeholder="Masukkan nama jenis dokumen baru" name="name">
+                <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" placeholder="Masukkan nama jenis dokumen baru" name="name" value="{{old('name')}}">
                 @error('name')
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
@@ -25,9 +24,12 @@
                 @enderror
                 <label for="group">Kelompok Dokumen</label>
                 <select name="group" id="group" class="form-control @error('group') is-invalid @enderror">
-                    <option value="" disabled selected>== Pilih Kelompok Dokumen ==</option>
-                    @foreach ($groups as $id => $nama_kelompok_dokumen)
-                        <option value="{{ $id }}">{{ $nama_kelompok_dokumen }}</option>
+                    @foreach ($groups as $group)
+                        @if (old('group') == $group->id)
+                            <option value="{{ $group->id }}" selected>{{ $group->nama_kelompok_dokumen }}</option>
+                        @else
+                            <option value="{{ $group->id }}">{{ $group->nama_kelompok_dokumen }}</option>
+                        @endif
                     @endforeach
                 </select>
                 @error('group')
@@ -45,4 +47,5 @@
       </div>
       </div> {{-- wajib pakai --}}
   </div> {{-- wajib pakai --}}
+  <script src="{{asset('sidebar_template/js/jquery.min.js')}}"></script>
 @endsection

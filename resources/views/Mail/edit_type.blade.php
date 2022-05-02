@@ -37,4 +37,5 @@
       </div>
       </div> {{-- wajib pakai --}}
   </div> {{-- wajib pakai --}}
+  <script src="{{asset('sidebar_template/js/jquery.min.js')}}"></script>
 @endsection

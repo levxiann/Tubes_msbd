@@ -12,9 +12,8 @@
           Tambah Bagian
         </div>
         <div class="card-body">
-        <form action="{{url('section/create')}}" method="POST" enctype="multipart/form-data">
+        <form action="{{url('section/store')}}" method="POST" enctype="multipart/form-data">
             @csrf
-            @method('PUT')
             <div class="form-group mb-3">
                 <label for="name">Nama Bagian</label>
                 <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" placeholder="Masukkan nama bagian baru" name="name">
@@ -33,4 +32,5 @@
       </div>
       </div> {{-- wajib pakai --}}
   </div> {{-- wajib pakai --}}
+  <script src="{{asset('sidebar_template/js/jquery.min.js')}}"></script>
 @endsection

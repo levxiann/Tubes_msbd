@@ -16,7 +16,7 @@
           <li class = "@if(session()->has('submenu') && session()->get('submenu') == 'group') active @endif">
               <a href="{{url('/document_group') }}">Kelompok Dokumen</a>
           </li>
-          <li class = "@if(session()->has('submenu') && session()->get('submenu') == 'doctype') active @endif">
+          <li class = "@if(session()->has('submenu') && session()->get('submenu') == 'doc_type') active @endif">
               <a href="{{url('/document_type')}}">Jenis Dokumen</a>
           </li>
           <li class = "@if(session()->has('submenu') && session()->get('submenu') == 'mailtype') active @endif">

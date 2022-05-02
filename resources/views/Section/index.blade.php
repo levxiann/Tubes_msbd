@@ -11,7 +11,6 @@
       @if (session('success'))
         <div class="alert alert-success alert-dismissible fade show" role="alert">
         <strong>Sukses!</strong> {{ session('success') }}
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
       @endif
       <div class="card">
@@ -19,7 +18,7 @@
           
           <div class="d-grid d-md-flex justify-content-between">
               Bagian
-            <a href="{{url('section/create')}}" class="btn btn-sm btn-flat btn-success" style="font-size: 0.8em;">Add Section</a>
+            <a href="{{url('section/create')}}" class="btn btn-sm btn-flat btn-success" style="font-size: 0.8em;"><span class="far fa-plus"></span> Tambah bagian</a>
           </div>
         </div>
         <div class="card-body">
@@ -36,17 +35,25 @@
                     <tr>
                         <td>{{$section->id}}</td>
                         <td>{{$section->nama_bagian}}</td>
-                        <td><a href="{{url('section/update/'.$section->id) }}" class="btn btn-sm btn-flat btn-warning"><span class="far fa-edit"></span> Update</a></td>
+                        <td>
+                          <form method="GET" action="{{url('section/update/'.$section->id) }}" style="display: inline-block;">
+                            @csrf
+                            <button type="submit" class="btn btn-sm btn-warning"><span class="far fa-edit"></span> Edit</button>
+                          </form>
+                        </td>
                     </tr>
                     @endforeach
                 </tbody>
             </table>
         </div>
-        <!--Pagination-->
-        <div class="d-flex mt-3 justify-content-center me-2">
-            {!! $sections->links() !!}
-        </div>
       </div>
       </div> {{-- wajib pakai --}}
   </div> {{-- wajib pakai --}}
+  <script src="{{asset('sidebar_template/js/jquery.min.js')}}"></script>
+  <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
+  <script>
+      $(document).ready( function () {
+      $('#section').DataTable();
+      } );
+  </script>
 @endsection

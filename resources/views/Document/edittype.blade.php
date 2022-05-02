@@ -30,11 +30,11 @@
                 <label for="group">Kelompok Dokumen</label>
                 <select name="group" id="group" class="form-control @error('group') is-invalid @enderror">
                     <option value="" disabled>== Pilih Kelompok Dokumen ==</option>
-                    @foreach ($groups as $id => $nama_kelompok_dokumen)
-                        @if ($type->document_group_id == $id)
-                            <option value="{{ $id }}" selected>{{ $nama_kelompok_dokumen }}</option>
+                    @foreach ($groups as $group)
+                        @if ($type->document_group_id == $group->id)
+                            <option value="{{ $group->id }}" selected>{{ $group->nama_kelompok_dokumen }}</option>
                         @else
-                            <option value="{{ $id }}">{{ $nama_kelompok_dokumen }}</option>
+                            <option value="{{ $group->id }}">{{ $group->nama_kelompok_dokumen }}</option>
                         @endif
                     @endforeach
                 </select>
@@ -53,4 +53,5 @@
       </div>
       </div> {{-- wajib pakai --}}
   </div> {{-- wajib pakai --}}
+  <script src="{{asset('sidebar_template/js/jquery.min.js')}}"></script>
 @endsection
