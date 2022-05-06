@@ -20,8 +20,8 @@
                 <input type="number" class="form-control" id="id" value="{{$section->id}}" name="id" disabled>
             </div>
             <div class="form-group mb-3">
-                <label for="name">Nama Jenis Surat</label>
-                <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" placeholder="Masukkan nama jenis surat baru" name="name" value="{{$section->nama_bagian}}">
+                <label for="name">Nama Bagian</label>
+                <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" placeholder="Masukkan nama bagian" name="name" value="{{$section->nama_bagian}}">
                 @error('name')
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>

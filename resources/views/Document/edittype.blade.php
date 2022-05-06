@@ -21,7 +21,7 @@
             </div>
             <div class="form-group mb-3">
                 <label for="name">Nama Jenis Dokumen</label>
-                <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" placeholder="Masukkan nama kelompok dokumen baru" name="name" value="{{$type->nama_jenis_dokumen}}">
+                <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" placeholder="Masukkan nama jenis dokumen baru" name="name" value="{{$type->nama_jenis_dokumen}}">
                 @error('name')
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
