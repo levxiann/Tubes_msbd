@@ -45,7 +45,7 @@
                 <tr>
                     <th scope="row">Disposisi</th>
                     <td>
-                        @if ($inmail->disposisi == 'Y')
+                        @if ($inmail->disposisi == 'Y' && $inmail->disposition != NULL)
                             <a href="{{url('inmail/dispo/preview/'.$inmail->disposition->no)}}" class="btn btn-sm btn-secondary"><span class="far fa-eye"></span> Preview</a>
                             @if (Auth::user()->role != 'lainnya')
                                 <form method="GET" action="{{url('inmail/dispo/edit/'.$inmail->disposition->no) }}" style="display: inline-block;">

@@ -111,7 +111,7 @@
                             <li>{{$dest->section->nama_bagian}}</li><br>
                         @endforeach
                     </td>
-                    <td style="text-align: right;">Kepala Sekolah</td>
+                    <td style="text-align: right;">{{$disposition->inmail->section->nama_bagian}}</td>
                 </tr>
             </table>
         </main>
