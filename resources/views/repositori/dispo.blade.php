@@ -15,7 +15,7 @@
         <h3>Rekap Surat Disposisi</h3>
         <div class="searching mt-2 mb-2">
             <p>Cari Berdasarkan :</p>
-            <form method = "GET" action="{{url('/inmails/dispo/search')}}">
+            <form method = "GET" action="{{url('/inmailss/dispo/search')}}">
                 @csrf
                 <div class="form-group mb-3">
                     <select name="type" class="form-select mr-3" aria-label="Default select example">
@@ -56,7 +56,7 @@
                 <td>{{$dispo->disposition->inmail->perihal}}</td>
                 <td>{{date('d F Y',strtotime($dispo->disposition->tanggal_disposisi))}}</td>
                 <td>
-                    <a href="{{url('/inmail/dispo/'.$dispo->disposition->inmail->no)}}" class="link-warning">Lihat Detail</a>
+                    <a href="{{url('/inmails/dispo/'.$dispo->disposition->inmail->no)}}" class="link-warning">Lihat Detail</a>
                 </td>
                 <td>
                     @if ($dispo->disposition->status == 'unread')
@@ -66,7 +66,7 @@
                     @endif
                 </td>
                 <td>
-                    <a href="{{url('inmail/download/'.$dispo->disposition->inmail->no)}}" class="btn btn-sm btn-secondary"><span class="far fa-download"></span> Download</a>
+                    <a href="{{url('inmails/download/'.$dispo->disposition->inmail->no)}}" class="btn btn-sm btn-secondary"><span class="far fa-download"></span> Download</a>
                 </td>
             </tr>
             @endforeach

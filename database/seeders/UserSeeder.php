@@ -19,7 +19,7 @@ class UserSeeder extends Seeder
         $users = [];
         $faker = Factory::create();
 
-        for($i = 0 ; $i < 3 ; $i++)
+        for($i = 0 ; $i < 7 ; $i++)
         {
             $users[] = [
                 'name' => $faker->name(),
@@ -29,7 +29,7 @@ class UserSeeder extends Seeder
                 'tanggal_lahir' => $faker->date('Y-m-d'),
                 'alamat' => $faker->text(rand(20, 50)),
                 'no_hp' => '085112345678',
-                'role' => ($i+1),
+                'role' => 1,
                 'section_id' => ($i+1),
                 'created_at' => now(),
                 'updated_at' => now()

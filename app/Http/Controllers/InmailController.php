@@ -115,7 +115,7 @@ class InmailController extends Controller
 
         if($request->dispo == 'Y')
         {
-            return redirect('/inmail/dispo/create/'.$request->noinmail)->with('success', 'Surat Masuk Berhasil Ditambah');
+            return redirect('/inmailss/dispo/create/'.$request->noinmail)->with('success', 'Surat Masuk Berhasil Ditambah');
         }
         else
         {   
@@ -445,7 +445,7 @@ class InmailController extends Controller
         return view('repositori.editdispo', compact('disposition', 'sections'));
     }
 
-    public function dispoupdate(Request $request, $id, $nosurat)
+    public function dispoupdate(Request $request, $id)
     {
         if(Auth::user()->role == 'lainnya')
         {
@@ -462,11 +462,13 @@ class InmailController extends Controller
             'dituju' => 'required'
         ]);
 
+        $dispo = Disposition::findOrFail($id);
+
         try
         {
             Disposition::where('no', $id)->update([
                 'no' => $request->nodispo,
-                'inmail_no' => $nosurat,
+                'inmail_no' => $dispo->inmail_no,
                 'tanggal_disposisi' => $request->tanggaldispo,
                 'isi_disposisi' => $request->isidispo,
             ]);
@@ -493,10 +495,10 @@ class InmailController extends Controller
             return redirect('/inmail')->with('error', 'Terjadi Kesalahan');
         }
         
-        return redirect('/inmail/'.$nosurat)->with('success', 'Disposisi Berhasil Diubah');
+        return redirect('/inmail/'.$dispo->inmail_no)->with('success', 'Disposisi Berhasil Diubah');
     }
 
-    public function dispodelete($nosurat, $id)
+    public function dispodelete($id)
     {
         if(Auth::user()->role == 'lainnya')
         {
@@ -506,14 +508,15 @@ class InmailController extends Controller
         session()->put('menu','inmail');
         session()->put('submenu','rekapinmail');
 
+        $dispo = Disposition::findOrFail($id);
+
         Disposition::destroy($id);
 
-        return redirect('inmail/'.$nosurat)->with('success', 'Disposisi berhasil dihapus');
+        return redirect('inmail/'.$dispo->inmail_no)->with('success', 'Disposisi berhasil dihapus');
     }
 
     public function markToRead($id)
     {
-
         Inmail::where('no', $id)->update([
             'status' => 2
         ]);
@@ -530,7 +533,7 @@ class InmailController extends Controller
 
         $dispo = Disposition::findOrFail($id);
 
-        return redirect('inmail/dispo/'.$dispo->inmail_no)->with('success', 'Status berhasil diubah');
+        return redirect('inmails/dispo/'.$dispo->inmail_no)->with('success', 'Status berhasil diubah');
     }
 
     public function cetakInmail($id)

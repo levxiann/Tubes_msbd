@@ -36,61 +36,61 @@ Route::get('/inmail', [InmailController::class, 'index']);
 
 Route::get('/inmail/search', [InmailController::class, 'search']);
 
-Route::get('/inmail/{no}', [InmailController::class, 'show']);
+Route::get('/inmail/{no}', [InmailController::class, 'show'])->where('no', '.*');
 
-Route::get('/inmail/status/{no}', [InmailController::class, 'markToRead']);
+Route::get('/inmails/status/{no}', [InmailController::class, 'markToRead'])->where('no', '.*');
 
 Route::get('/inmails/create', [InmailController::class, 'create']);
 
 Route::post('/inmail/store', [InmailController::class, 'store']);
 
-Route::get('/inmail/edit/{no}', [InmailController::class, 'edit']);
+Route::get('/inmails/edit/{no}', [InmailController::class, 'edit'])->where('no', '.*');
 
-Route::patch('/inmail/update/{no}', [InmailController::class, 'update']);
+Route::patch('/inmails/update/{no}', [InmailController::class, 'update'])->where('no', '.*');
 
-Route::delete('/inmail/hapus/{no}', [InmailController::class, 'destroy']);
+Route::delete('/inmails/hapus/{no}', [InmailController::class, 'destroy'])->where('no', '.*');
 
 Route::get('/inmails/dispo', [InmailController::class, 'dispo']);
 
-Route::get('/inmail/dispo/{no}', [InmailController::class, 'disposhow']);
+Route::get('/inmails/dispo/{no}', [InmailController::class, 'disposhow'])->where('no', '.*');
 
-Route::get('/inmails/dispo/search', [InmailController::class, 'disposearch']);
+Route::get('/inmailss/dispo/search', [InmailController::class, 'disposearch']);
 
-Route::get('/inmail/dispo/create/{no}', [InmailController::class, 'dispocreate']);
+Route::get('/inmailss/dispo/create/{no}', [InmailController::class, 'dispocreate'])->where('no', '.*');
 
-Route::post('/inmail/dispo/store/{no}', [InmailController::class, 'dispostore']);
+Route::post('/inmails/dispo/store/{no}', [InmailController::class, 'dispostore'])->where('no', '.*');
 
-Route::get('/inmail/dispo/edit/{no}', [InmailController::class, 'dispoedit']);
+Route::get('/inmailss/dispo/edit/{no}', [InmailController::class, 'dispoedit'])->where('no', '.*');
 
-Route::patch('/inmail/dispo/update/{id}/{nosurat}', [InmailController::class, 'dispoupdate']);
+Route::patch('/inmail/dispo/update/{id}', [InmailController::class, 'dispoupdate'])->where('id', '.*');
 
-Route::delete('/inmail/dispo/hapus/{nosurat}/{id}', [InmailController::class, 'dispodelete']);
+Route::delete('/inmails/dispo/hapus/{id}', [InmailController::class, 'dispodelete'])->where('id', '.*');
 
-Route::get('/inmails/dispo/status/{no}', [InmailController::class, 'markToReadDispo']);
+Route::get('/inmailss/dispo/status/{no}', [InmailController::class, 'markToReadDispo'])->where('no', '.*');
 
-Route::get('/inmail/dispo/preview/{no}', [InmailController::class, 'cetakDispo']);
+Route::get('/inmailss/dispo/preview/{no}', [InmailController::class, 'cetakDispo'])->where('no', '.*');
 
-Route::get('/inmail/download/{no}', [InmailController::class, 'cetakInmail']);
+Route::get('/inmails/download/{no}', [InmailController::class, 'cetakInmail'])->where('no', '.*');
 
 Route::get('/outmail', [OutmailController::class, 'index']);
 
 Route::get('/outmail/search', [OutmailController::class, 'search']);
 
-Route::get('/outmail/{no}', [OutmailController::class, 'show']);
+Route::get('/outmail/{no}', [OutmailController::class, 'show'])->where('no', '.*');
 
-Route::get('/outmail/status/{no}', [OutmailController::class, 'markToRead']);
+Route::get('/outmails/status/{no}', [OutmailController::class, 'markToRead'])->where('no', '.*');
 
 Route::get('/outmails/create', [OutmailController::class, 'create']);
 
 Route::post('/outmail/store', [OutmailController::class, 'store']);
 
-Route::get('/outmail/edit/{no}', [OutmailController::class, 'edit']);
+Route::get('/outmails/edit/{no}', [OutmailController::class, 'edit'])->where('no', '.*');
 
-Route::patch('/outmail/update/{no}', [OutmailController::class, 'update']);
+Route::patch('/outmails/update/{no}', [OutmailController::class, 'update'])->where('no', '.*');
 
-Route::get('/outmail/download/{no}', [OutmailController::class, 'cetakOutmail']);
+Route::get('/outmails/download/{no}', [OutmailController::class, 'cetakOutmail'])->where('no', '.*');
 
-Route::delete('/outmail/hapus/{no}', [OutmailController::class, 'destroy']);
+Route::delete('/outmails/hapus/{no}', [OutmailController::class, 'destroy'])->where('no', '.*');
 
 Route::get('/Data_Users', [AccountController::class, 'index'])->name('users_data');
 
@@ -130,15 +130,15 @@ Route::get('/document/inputdocument', [DocumentController::class, 'create']);
 
 Route::post('/document/inputdocument', [DocumentController::class, 'store']);
 
-Route::get('/document/editdocument/{no}', [DocumentController::class, 'edit']);
+Route::get('/document/editdocument/{no}', [DocumentController::class, 'edit'])->where('no', '.*');
 
-Route::put('/document/editdocument/{no}', [DocumentController::class, 'update']);
+Route::put('/document/editdocument/{no}', [DocumentController::class, 'update'])->where('no', '.*');
 
-Route::delete('/document/{no}', [DocumentController::class, 'destroy']);
+Route::delete('/document/{no}', [DocumentController::class, 'destroy'])->where('no', '.*');
 
-Route::get('/document/download/{file_dokumen}', [DownloadController::class, 'download']);
+Route::get('/document/download/{file_dokumen}', [DownloadController::class, 'download'])->where('file_dokumen', '.*');
 
-Route::get('/document/detaildocument/{no}', [DocumentController::class, 'detail']); 
+Route::get('/document/detaildocument/{no}', [DocumentController::class, 'detail'])->where('no', '.*'); 
 
 Route::get('/document_group', [TypeController::class, 'group']);
 

@@ -69,7 +69,7 @@
                     @endif
                 </td>
                 <td>
-                    <a href="{{url('inmail/download/'.$inmail->no)}}" class="btn btn-sm btn-secondary"><span class="far fa-download"></span> Download</a>
+                    <a href="{{url('inmails/download/'.$inmail->no)}}" class="btn btn-sm btn-secondary"><span class="far fa-download"></span> Download</a>
                 </td>
             </tr>
             @endforeach

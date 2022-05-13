@@ -80,17 +80,17 @@
                     @endif
                 </td>
                 <td>
-                    <form method="GET" action="{{url('inmail/edit/'.$inmail->no) }}" style="display: inline-block;">
+                    <form method="GET" action="{{url('inmails/edit/'.$inmail->no) }}" style="display: inline-block;">
                         @csrf
                         <button type="submit" class="btn btn-sm btn-warning"><span class="far fa-edit"></span> Edit</button>
                     </form>
-                    <form method="POST" action="{{url('inmail/hapus/'.$inmail->no) }}" style="display: inline-block;">
+                    <form method="POST" action="{{url('inmails/hapus/'.$inmail->no) }}" style="display: inline-block;">
                         @csrf
                         @method('DELETE')
                         <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Hapus Surat Masuk?')"><span class="far fa-trash-alt"></span> Hapus</button>
                     </form>
                     <p></p>
-                    <a href="{{url('inmail/download/'.$inmail->no)}}" class="btn btn-sm btn-secondary"><span class="far fa-download"></span> Download</a>
+                    <a href="{{url('inmails/download/'.$inmail->no)}}" class="btn btn-sm btn-secondary"><span class="far fa-download"></span> Download</a>
                 </td>
             </tr>
             @endforeach

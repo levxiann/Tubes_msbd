@@ -12,7 +12,7 @@
 
             /** Define now the real margins of every page in the PDF **/
             body {
-                margin-top: 7.5cm;
+                margin-top: 9cm;
             }
 
             /** Define the header rules **/

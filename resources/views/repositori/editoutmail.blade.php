@@ -18,7 +18,7 @@
             </div>
         @endif
         <h3>Edit Surat Keluar</h3>
-        <form method="POST" action="{{url('/outmail/update/'.$outmail->no)}}" enctype="multipart/form-data">
+        <form method="POST" action="{{url('/outmails/update/'.$outmail->no)}}" enctype="multipart/form-data">
             @csrf
             @method('PATCH')
             <div class="form-group mb-3">
