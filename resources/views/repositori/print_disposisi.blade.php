@@ -46,7 +46,7 @@
     </head>
     <body>
         <div id="watermark">
-            <img src="{{ public_path('images/nophoto.png') }}" alt="watermark">
+            <img src="{{ public_path('images/tutwuri.png') }}" alt="watermark">
         </div>
         <!-- Define header and footer blocks before your content -->
         <header>
