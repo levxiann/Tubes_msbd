@@ -50,7 +50,7 @@
                     <th scope="row">Status</th>
                     <td>
                         @if ($outmail->status == 'unread')
-                            <a href="{{url('outmail/status/'.$outmail->no)}}" class="btn btn-sm btn-danger">Mark as read</a>
+                            <a href="{{url('outmails/status/'.$outmail->no)}}" class="btn btn-sm btn-danger">Mark as read</a>
                         @else
                             <button type="button" class="btn btn-sm btn-success" disabled>Read</button> 
                         @endif

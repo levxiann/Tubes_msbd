@@ -46,13 +46,13 @@
                     <th scope="row">Disposisi</th>
                     <td>
                         @if ($inmail->disposisi == 'Y' && $inmail->disposition != NULL)
-                            <a href="{{url('inmail/dispo/preview/'.$inmail->disposition->no)}}" class="btn btn-sm btn-secondary"><span class="far fa-eye"></span> Preview</a>
+                            <a href="{{url('inmailss/dispo/preview/'.$inmail->disposition->no)}}" class="btn btn-sm btn-secondary"><span class="far fa-eye"></span> Preview</a>
                             @if (Auth::user()->role != 'lainnya')
-                                <form method="GET" action="{{url('inmail/dispo/edit/'.$inmail->disposition->no) }}" style="display: inline-block;">
+                                <form method="GET" action="{{url('inmailss/dispo/edit/'.$inmail->disposition->no) }}" style="display: inline-block;">
                                     @csrf
                                     <button type="submit" class="btn btn-sm btn-warning"><span class="far fa-edit"></span> Edit</button>
                                 </form>
-                                <form method="POST" action="{{url('inmail/dispo/hapus/'.$inmail->no.'/'.$inmail->disposition->no) }}" style="display: inline-block;">
+                                <form method="POST" action="{{url('inmails/dispo/hapus/'.$inmail->disposition->no) }}" style="display: inline-block;">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Hapus Disposisi?')"><span class="far fa-trash-alt"></span> Hapus</button>
@@ -62,7 +62,7 @@
                             @if (Auth::user()->role == 'lainnya')
                                 Tidak
                             @else
-                                <a href="{{url('inmail/dispo/create/'.$inmail->no)}}" class="btn btn-sm btn-primary"><span class="far fa-plus"></span> Tambah</a>
+                                <a href="{{url('inmailss/dispo/create/'.$inmail->no)}}" class="btn btn-sm btn-primary"><span class="far fa-plus"></span> Tambah</a>
                             @endif
                         @endif
                     </td>
@@ -75,7 +75,7 @@
                     <th scope="row">Status</th>
                     <td>
                         @if ($inmail->status == 'unread')
-                            <a href="{{url('inmail/status/'.$inmail->no)}}" class="btn btn-sm btn-danger">Mark as read</a>
+                            <a href="{{url('inmails/status/'.$inmail->no)}}" class="btn btn-sm btn-danger">Mark as read</a>
                         @else
                             <button type="button" class="btn btn-sm btn-success" disabled>Read</button> 
                         @endif

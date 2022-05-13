@@ -18,7 +18,7 @@
             </div>
         @endif
         <h3>Edit Disposisi</h3>
-        <form method="POST" action="{{url('/inmail/dispo/update/'.$disposition->no.'/'.$disposition->inmail_no)}}">
+        <form method="POST" action="{{url('/inmail/dispo/update/'.$disposition->no)}}">
             @csrf
             @method('PATCH')
             <div class="alert alert-success alert-dismissible fade show" role="alert">

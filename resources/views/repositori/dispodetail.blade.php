@@ -50,12 +50,12 @@
                     <th scope="row">Disposisi</th>
                     <td>
                         @if ($inmail->disposisi == 'Y')
-                            <a href="{{url('inmail/dispo/preview/'.$inmail->disposition->no)}}" class="btn btn-sm btn-secondary"><span class="far fa-eye"></span> Preview</a>
+                            <a href="{{url('inmailss/dispo/preview/'.$inmail->disposition->no)}}" class="btn btn-sm btn-secondary"><span class="far fa-eye"></span> Preview</a>
                         @else
                             @if (Auth::user()->role == 'lainnya')
                                 Tidak
                             @else
-                                <a href="{{url('inmail/dispo/create/'.$inmail->no)}}" class="btn btn-sm btn-primary"><span class="far fa-plus"></span> Tambah</a>
+                                <a href="{{url('inmails/dispo/create/'.$inmail->no)}}" class="btn btn-sm btn-primary"><span class="far fa-plus"></span> Tambah</a>
                             @endif
                         @endif
                     </td>
@@ -68,7 +68,7 @@
                     <th scope="row">Status</th>
                     <td>
                         @if ($inmail->disposition->status == 'unread')
-                            <a href="{{url('inmails/dispo/status/'.$inmail->disposition->no)}}" class="btn btn-sm btn-danger">Mark as read</a>
+                            <a href="{{url('inmailss/dispo/status/'.$inmail->disposition->no)}}" class="btn btn-sm btn-danger">Mark as read</a>
                         @else
                             <button type="button" class="btn btn-sm btn-success" disabled>Read</button> 
                         @endif

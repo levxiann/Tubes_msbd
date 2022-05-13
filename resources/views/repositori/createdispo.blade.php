@@ -13,7 +13,7 @@
             </div>
         @endif
         <h3>Tambah Disposisi</h3>
-        <form method="POST" action="{{url('/inmail/dispo/store/'.$inmail->no)}}">
+        <form method="POST" action="{{url('/inmails/dispo/store/'.$inmail->no)}}">
             @csrf
             <div class="alert alert-success alert-dismissible fade show" role="alert">
                 No Surat : {{$inmail->no}}

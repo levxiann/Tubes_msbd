@@ -18,7 +18,7 @@
             </div>
         @endif
         <h3>Edit Surat Masuk</h3>
-        <form method="POST" action="{{url('/inmail/update/'.$inmail->no)}}" enctype="multipart/form-data">
+        <form method="POST" action="{{url('/inmails/update/'.$inmail->no)}}" enctype="multipart/form-data">
             @csrf
             @method('PATCH')
             <div class="form-group mb-3">

@@ -72,17 +72,17 @@
                     @endif
                 </td>
                 <td>
-                    <form method="GET" action="{{url('outmail/edit/'.$outmail->no) }}" style="display: inline-block;">
+                    <form method="GET" action="{{url('outmails/edit/'.$outmail->no) }}" style="display: inline-block;">
                         @csrf
                         <button type="submit" class="btn btn-sm btn-warning"><span class="far fa-edit"></span> Edit</button>
                     </form>
-                    <form method="POST" action="{{url('outmail/hapus/'.$outmail->no) }}" style="display: inline-block;">
+                    <form method="POST" action="{{url('outmails/hapus/'.$outmail->no) }}" style="display: inline-block;">
                         @csrf
                         @method('DELETE')
                         <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Hapus Surat Keluar?')"><span class="far fa-trash-alt"></span> Hapus</button>
                     </form>
                     <p></p>
-                    <a href="{{url('outmail/download/'.$outmail->no)}}" class="btn btn-sm btn-secondary"><span class="far fa-download"></span> Download</a>
+                    <a href="{{url('outmails/download/'.$outmail->no)}}" class="btn btn-sm btn-secondary"><span class="far fa-download"></span> Download</a>
                 </td>
             </tr>
             @endforeach
