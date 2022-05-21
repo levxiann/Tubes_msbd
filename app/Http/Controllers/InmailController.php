@@ -101,21 +101,28 @@ class InmailController extends Controller
 
         $request->file('filesurat')->move(public_path('inmails'), $name);
 
-        Inmail::create([
-            'no' => $request->noinmail,
-            'mail_type_id' => $request->jenis,
-            'section_id' => $request->bagian,
-            'tanggal_masuk' => $request->tanggalmasuk,
-            'perihal' => $request->perihal,
-            'pokok_masalah' => $request->pokok,
-            'disposisi' => 2,
-            'status' => 1,
-            'file_surat' => $name 
-        ]);
+        try
+        {
+            Inmail::create([
+                'no' => rtrim($request->noinmail, '/'),
+                'mail_type_id' => $request->jenis,
+                'section_id' => $request->bagian,
+                'tanggal_masuk' => $request->tanggalmasuk,
+                'perihal' => $request->perihal,
+                'pokok_masalah' => $request->pokok,
+                'disposisi' => 2,
+                'status' => 1,
+                'file_surat' => $name 
+            ]);
+        }
+        catch (QueryException $e)
+        {
+            return redirect('/inmail')->with('error', 'Terjadi Kesalahan');
+        }
 
         if($request->dispo == 'Y')
         {
-            return redirect('/inmailss/dispo/create/'.$request->noinmail)->with('success', 'Surat Masuk Berhasil Ditambah');
+            return redirect('/inmailss/dispo/create/'.rtrim($request->noinmail, '/'))->with('success', 'Surat Masuk Berhasil Ditambah');
         }
         else
         {   
@@ -194,14 +201,21 @@ class InmailController extends Controller
             'filesurat' => 'mimes:pdf'
         ]);
 
-        Inmail::where('no', $id)->update([
-            'no' => $request->noinmail,
-            'mail_type_id' => $request->jenis,
-            'section_id' => $request->bagian,
-            'tanggal_masuk' => $request->tanggalmasuk,
-            'perihal' => $request->perihal,
-            'pokok_masalah' => $request->pokok,
-        ]);
+        try
+        {
+            Inmail::where('no', $id)->update([
+                'no' => rtrim($request->noinmail, '/'),
+                'mail_type_id' => $request->jenis,
+                'section_id' => $request->bagian,
+                'tanggal_masuk' => $request->tanggalmasuk,
+                'perihal' => $request->perihal,
+                'pokok_masalah' => $request->pokok,
+            ]);
+        }
+        catch(QueryException $e)
+        {
+            return redirect('/inmail')->with('error', 'Terjadi Kesalahan');
+        }
 
         if($request->has('filesurat'))
         {
@@ -209,12 +223,12 @@ class InmailController extends Controller
 
             $request->file('filesurat')->move(public_path('inmails'), $name);
 
-            Inmail::where('no', $id)->update([
+            Inmail::where('no', rtrim($request->noinmail, '/'))->update([
                 'file_surat' => $name
             ]);
         }
 
-        return redirect('/inmail/'.$request->noinmail)->with('success', 'Surat Masuk Berhasil Diubah');
+        return redirect('/inmail/'.rtrim($request->noinmail, '/'))->with('success', 'Surat Masuk Berhasil Diubah');
     }
 
     /**
@@ -405,7 +419,7 @@ class InmailController extends Controller
             try 
             {
                 Disposition::create([
-                    'no' => $request->nodispo,
+                    'no' => rtrim($request->nodispo, '/'),
                     'inmail_no' => $no,
                     'tanggal_disposisi' => $request->tanggaldispo,
                     'isi_disposisi' => $request->isidispo,
@@ -421,7 +435,7 @@ class InmailController extends Controller
         foreach($request->dituju as $dituju)
         {
             Destination::create([
-                'disposition_no' => $request->nodispo,
+                'disposition_no' => rtrim($request->nodispo, '/'),
                 'section_id' => $dituju
             ]);
         }
@@ -467,7 +481,7 @@ class InmailController extends Controller
         try
         {
             Disposition::where('no', $id)->update([
-                'no' => $request->nodispo,
+                'no' => rtrim($request->nodispo, '/'),
                 'inmail_no' => $dispo->inmail_no,
                 'tanggal_disposisi' => $request->tanggaldispo,
                 'isi_disposisi' => $request->isidispo,
@@ -485,7 +499,7 @@ class InmailController extends Controller
             foreach($request->dituju as $dituju)
             {
                 Destination::create([
-                    'disposition_no' => $request->nodispo,
+                    'disposition_no' => rtrim($request->nodispo, '/'),
                     'section_id' => $dituju
                 ]);
             }
