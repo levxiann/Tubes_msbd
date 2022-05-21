@@ -492,7 +492,7 @@ class InmailController extends Controller
             return redirect('/inmail')->with('error', 'Terjadi Kesalahan');
         }
 
-        Destination::where('disposition_no', $request->nodispo)->delete();
+        Destination::where('disposition_no', rtrim($request->nodispo, '/'))->delete();
 
         try 
         {
