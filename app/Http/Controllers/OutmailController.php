@@ -6,6 +6,7 @@ use App\Models\Inmail;
 use App\Models\MailType;
 use App\Models\Outmail;
 use App\Models\Section;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -90,16 +91,23 @@ class OutmailController extends Controller
 
         $request->file('filesurat')->move(public_path('outmails'), $name);
 
-        Outmail::create([
-            'no' => $request->nooutmail,
-            'mail_type_id' => $request->jenis,
-            'section_id' => $request->bagian,
-            'tanggal_keluar' => $request->tanggalkeluar,
-            'perihal' => $request->perihal,
-            'pokok_masalah' => $request->pokok,
-            'file_surat' => $name,
-            'status' => 1 
-        ]);
+        try
+        {
+            Outmail::create([
+                'no' => rtrim($request->nooutmail, '/'),
+                'mail_type_id' => $request->jenis,
+                'section_id' => $request->bagian,
+                'tanggal_keluar' => $request->tanggalkeluar,
+                'perihal' => $request->perihal,
+                'pokok_masalah' => $request->pokok,
+                'file_surat' => $name,
+                'status' => 1 
+            ]);
+        }
+        catch(QueryException $e)
+        {
+            return redirect('/outmail')->with('error', 'Terjadi Kesalahan');
+        }
 
         return redirect('/outmail')->with('success', 'Surat Keluar Berhasil Ditambah');
     }
@@ -175,14 +183,22 @@ class OutmailController extends Controller
             'filesurat' => 'mimes:pdf'
         ]);
 
-        Outmail::where('no', $id)->update([
-            'no' => $request->nooutmail,
-            'mail_type_id' => $request->jenis,
-            'section_id' => $request->bagian,
-            'tanggal_keluar' => $request->tanggalkeluar,
-            'perihal' => $request->perihal,
-            'pokok_masalah' => $request->pokok,
-        ]);
+        try
+        {
+            Outmail::where('no', $id)->update([
+                'no' => rtrim($request->nooutmail, '/'),
+                'mail_type_id' => $request->jenis,
+                'section_id' => $request->bagian,
+                'tanggal_keluar' => $request->tanggalkeluar,
+                'perihal' => $request->perihal,
+                'pokok_masalah' => $request->pokok,
+            ]);
+        }
+        catch(QueryException $e)
+        {
+            return redirect('/outmail')->with('error', 'Terjadi Kesalahan');
+        }
+        
 
         if($request->has('filesurat'))
         {
@@ -190,12 +206,12 @@ class OutmailController extends Controller
 
             $request->file('filesurat')->move(public_path('outmails'), $name);
 
-            Outmail::where('no', $id)->update([
+            Outmail::where('no', rtrim($request->nooutmail, '/'))->update([
                 'file_surat' => $name
             ]);
         }
 
-        return redirect('/outmail/'.$request->nooutmail)->with('success', 'Surat Keluar Berhasil Diubah');
+        return redirect('/outmail/'.rtrim($request->nooutmail, '/'))->with('success', 'Surat Keluar Berhasil Diubah');
     }
 
     /**

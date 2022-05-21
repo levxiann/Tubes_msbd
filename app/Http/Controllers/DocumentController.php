@@ -5,6 +5,7 @@ use App\Http\Controllers\DownloadController;
 use App\Models\Document;
 use App\Models\DocumentType;
 use App\Models\Section;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -82,16 +83,23 @@ class DocumentController extends Controller
         $name = date('dmY_His_') . $name;
         $request->file('file_dokumen')->move(public_path('/documents'), $name);
 
-        Document::create([
-            'no' => $request->no,
-            'nama_dokumen' => $request->nama_dokumen,
-            'document_type_id' => $request->document_type_id,
-            'section_id' => $request->section_id,
-            'sifat_dokumen' => $request->sifat_dokumen,
-            'tanggal_terbit' => $request->tanggal_terbit,
-            'perihal' => $request->perihal,
-            'file_dokumen' => $name
-        ]);
+        try
+        {
+            Document::create([
+                'no' => rtrim($request->no, '/'),
+                'nama_dokumen' => $request->nama_dokumen,
+                'document_type_id' => $request->document_type_id,
+                'section_id' => $request->section_id,
+                'sifat_dokumen' => $request->sifat_dokumen,
+                'tanggal_terbit' => $request->tanggal_terbit,
+                'perihal' => $request->perihal,
+                'file_dokumen' => $name
+            ]);
+        }
+        catch(QueryException $e)
+        {
+            return redirect('/document')->with('error','Terjadi Kesalahan');
+        }
          
         return redirect('/document')->with('success','Dokumen baru telah berhasil ditambah!');
     }
@@ -147,16 +155,23 @@ class DocumentController extends Controller
             'file_dokumen' => 'mimes:pdf'
         ]);
 
-        Document::where('no', $no)
-        ->update([
-            'no' => $request->no,
-            'nama_dokumen' => $request->nama_dokumen,
-            'document_type_id' => $request->document_type_id,
-            'section_id' => $request->section_id,
-            'sifat_dokumen' => $request->sifat_dokumen,
-            'tanggal_terbit' => $request->tanggal_terbit,
-            'perihal' => $request->perihal
-        ]);
+        try
+        {
+            Document::where('no', $no)
+            ->update([
+                'no' => rtrim($request->no, '/'),
+                'nama_dokumen' => $request->nama_dokumen,
+                'document_type_id' => $request->document_type_id,
+                'section_id' => $request->section_id,
+                'sifat_dokumen' => $request->sifat_dokumen,
+                'tanggal_terbit' => $request->tanggal_terbit,
+                'perihal' => $request->perihal
+            ]);
+        }
+        catch(QueryException $e)
+        {
+            return redirect('/document')->with('error','Terjadi Kesalahan');
+        }
 
         if($request->has('file_dokumen'))
         {
@@ -164,7 +179,7 @@ class DocumentController extends Controller
             $name = date('dmY_His_') . $name;
             $request->file('file_dokumen')->move(public_path('/documents'), $name);
 
-            Document::where('no', $no)
+            Document::where('no', rtrim($request->no, '/'))
             ->update([
                 'file_dokumen' => $name
             ]);
